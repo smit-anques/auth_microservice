@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package auth;
+
+service AuthService {
+
+  rpc Signup (SignupRequest)
+      returns (SignupResponse);
+
+  rpc Login (LoginRequest)
+      returns (LoginResponse);
+
+  rpc Profile (ProfileRequest)
+      returns (ProfileResponse);
+
+  rpc VerifyUserToken (VerifyTokenRequest)
+      returns (VerifyTokenResponse);
+
+  rpc VerifyAdminToken (VerifyTokenRequest)
+      returns (VerifyTokenResponse);
+}
+
+message User {
+  int32 id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string email = 4;
+  int32 role_id = 5;
+  bool is_active = 6;
+  string image = 7;
+  string phone = 8;
+  string dial_code = 9;
+  string createdAt = 10;
+  string updatedAt = 11;
+}
+
+message SignupRequest {
+  string first_name = 1;
+  string last_name = 2;
+  string email = 3;
+  string password = 4;
+  int32 role_id = 5;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+  string device_token = 3;
+}
+
+message ProfileRequest {
+  int32 userId = 1;
+}
+
+//
+// Signup Response
+//
+message SignupData {
+  User user = 1;
+}
+
+message SignupResponse {
+  bool status = 1;
+  string message = 2;
+  SignupData token = 3;
+}
+
+//
+// Login Response
+//
+message LoginData {
+  User user = 1;
+  string token = 2;
+}
+
+message LoginResponse {
+  bool status = 1;
+  string message = 2;
+  string token = 3;
+  User data = 4;
+}
+
+//
+// Profile Response
+//
+message ProfileResponse {
+  bool status = 1;
+  string message = 2;
+  User data = 3;
+}
+
+//
+// Token Verification
+//
+message VerifyTokenRequest {
+  string token = 1;
+}
+
+message VerifyTokenResponse {
+  bool status = 1;
+  string message = 2;
+  int32 userId = 3;
+  string email = 4;
+  int32 role_id = 5;
+}
