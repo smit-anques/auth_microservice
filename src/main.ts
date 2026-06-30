@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Transport } from '@nestjs/microservices';
 import { join } from 'path';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice(
@@ -14,7 +16,7 @@ async function bootstrap() {
 
         protoPath: join(process.cwd(), 'proto', 'auth.proto'),
 
-        url: 'localhost:50051',
+        url:process.env.GRPC_URL || '0.0.0.0:50051',
       },
     },
   );
